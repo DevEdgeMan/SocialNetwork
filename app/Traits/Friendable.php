@@ -26,7 +26,15 @@ trait Friendable
         return 'failed';
     }
 
-    public function checkFriendship($user_id) {
+    public function confirmRequest($user_id) {
+        Friendship::where('user_requested', $this->id)
+                  ->where('requester', $user_id)
+                  ->update(['status' => true]);
+
+        return back()->with('success', 'Request accepted');
+    }
+
+    /*public function checkFriendship($user_id) {
         $check = Friendship::where('requester', $this->id)
                            ->where('user_requested', $user_id)
                            ->first();
@@ -34,7 +42,24 @@ trait Friendable
         /*if ($check)
             return true;
         
-        return false;*/
+        return false;
         return $check;
+    }*/
+
+    public function checkFriendship($user_id) {
+        $checkRequester = Friendship::where('requester', $this->id)
+                           ->where('user_requested', $user_id)
+                           ->first();
+
+        $checkRequested = Friendship::where('user_requested', $this->id)
+                            ->where('requester', $user_id)
+                            ->first();
+
+        if ($checkRequester)
+            return 'Request Sent';
+        else if ($checkRequested)
+            return 'Sent you a Request';
+        else
+            return '';
     }
 }

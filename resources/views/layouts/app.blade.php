@@ -40,6 +40,7 @@
                             <li><a href="{{ route('home') }}">Home</a></li>
                             <li><a href="{{ route('profile', Auth::user()->slug) }}">Profile</a></li>
                             <li><a href="{{ route('findFriends') }}">Find Friends</a></li>
+                            <li><a href="{{ route('friendRequests') }}">My Requests</a></li>
                         @endauth
                     </ul>
 

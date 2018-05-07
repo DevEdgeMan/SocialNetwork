@@ -55,14 +55,14 @@
                             </div>
 
                             <div class="col-md-3 pull-right">
-                                @if (Auth::user()->checkFriendship($user->id))
-                                    <p>
-                                        Request Sent
-                                    </p>
-                                @else
+                                @if (Auth::user()->checkFriendship($user->id) == '')
                                     <p>
                                         <a href="{{url('/')}}/addFriend/{{$user->id}}"
                                            class="btn btn-info btn-sm">Add to Friend</a>
+                                    </p>
+                                @else
+                                    <p>
+                                        {{ Auth::user()->checkFriendship($user->id) }}
                                     </p>
                                 @endif
                             </div>

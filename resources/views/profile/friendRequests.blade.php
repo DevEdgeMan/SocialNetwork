@@ -5,7 +5,7 @@
     <ol class="breadcrumb">
         <li><a href="{{ route('home') }}">Home</a></li>
         <li><a href="{{ route('profile', Auth::user()->slug) }}">Profile</a></li>
-        <li><a href="#">Find Friends</a></li>
+        <li><a href="#">My Requests</a></li>
     </ol>
 
     
@@ -43,7 +43,7 @@
 
                                     <div class="col-md-3 pull-right">
                                         <p class="pull-right">
-                                            <a href="#" class="btn btn-info btn-sm">Confirm</a>
+                                            <a href="{{ route('confirmRequest', $user->id) }}" class="btn btn-info btn-sm">Confirm</a>
                                         </p>
                                     </div>
                                 </div>
@@ -51,18 +51,18 @@
                         </div>
 
                         <div role="tabpanel" class="tab-pane" id="send">
-                            @foreach($sendrequests as $user2)
+                            @foreach($sendrequests as $user)
                                 <div class="row" style="border-bottom:1px solid #ccc; margin-bottom:15px">
                                     <div class="col-md-2 pull-left">
-                                        <img src="{{url('../')}}/img/{{$user2->pic}}"
+                                        <img src="{{url('../')}}/img/{{$user->pic}}"
                                         width="80px" height="80px" class="img-rounded"/>
                                     </div>
 
                                     <div class="col-md-7 pull-left">
-                                        <h3 style="margin:0px;"><a href="{{url('/profile')}}/{{$user2->slug}}">
-                                            {{ucwords($user2->name)}}</a></h3>
-                                        <p><i class="fa fa-globe"></i> {{$user2->profile['city']}}  - {{$user2->profile['country']}}</p>
-                                        <p>{{$user2->profile['about']}}</p>
+                                        <h3 style="margin:0px;"><a href="{{url('/profile')}}/{{$user->slug}}">
+                                            {{ucwords($user->name)}}</a></h3>
+                                        <p><i class="fa fa-globe"></i> {{$user->profile['city']}}  - {{$user->profile['country']}}</p>
+                                        <p>{{$user->profile['about']}}</p>
                                     </div>
 
                                     <div class="col-md-3 pull-right">
@@ -75,7 +75,27 @@
                         </div>
 
                         <div role="tabpanel" class="tab-pane" id="friends">
-                        
+                            @foreach($friends as $user)
+                                <div class="row" style="border-bottom:1px solid #ccc; margin-bottom:15px">
+                                    <div class="col-md-2 pull-left">
+                                        <img src="{{url('../')}}/img/{{$user->pic}}"
+                                        width="80px" height="80px" class="img-rounded"/>
+                                    </div>
+
+                                    <div class="col-md-7 pull-left">
+                                        <h3 style="margin:0px;"><a href="{{url('/profile')}}/{{$user->slug}}">
+                                            {{ucwords($user->name)}}</a></h3>
+                                        <p><i class="fa fa-globe"></i> {{$user->profile['city']}}  - {{$user->profile['country']}}</p>
+                                        <p>{{$user->profile['about']}}</p>
+                                    </div>
+
+                                    <div class="col-md-3 pull-right">
+                                        <p class="pull-right">
+                                            <a href="#" class="btn btn-info btn-sm">Unfriend</a>
+                                        </p>
+                                    </div>
+                                </div>
+                            @endforeach
                         </div>
                     </div>
                 </div>

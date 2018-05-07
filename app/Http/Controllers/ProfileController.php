@@ -67,6 +67,20 @@ class ProfileController extends Controller
                         ->where('status', false)
                         ->get();
 
-        return view('profile.friendRequests', ['requests' => $requests, 'sendrequests' => $sendrequests]);
+        $friends1 = User::rightJoin('friendships', 'users.id', 'friendships.requester')
+                        ->select('users.*')
+                        ->where('friendships.user_requested', $uid)
+                        ->where('status', true)
+                        ->get();
+        $friends2 = User::rightJoin('friendships', 'users.id', 'friendships.user_requested')
+                        ->select('users.*')
+                        ->where('friendships.requester', $uid)
+                        ->where('status', true)
+                        ->get();
+        $friends = $friends1->merge($friends2);
+
+        return view('profile.friendRequests', ['requests' => $requests,
+                                               'sendrequests' => $sendrequests,
+                                               'friends' => $friends]);
     }
 }
