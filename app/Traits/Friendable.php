@@ -3,6 +3,7 @@
 namespace App\Traits;
 
 use App\Friendship;
+use App\Notification;
 
 trait Friendable
 {
@@ -20,9 +21,18 @@ trait Friendable
         ]);
 
         if ($friendship)
+        {
+            Notification::create([
+                'from_user' => $this->id,
+                'to_user' => $user_id,
+                'note' => '<b style=\'color:green;\'>' . $this->name . '</b> sent you a friend request',
+                'status' => true
+            ]);
+
             return back()->with('success', 'Request sended');
             //return $friendship;
-        
+        }
+
         return 'failed';
     }
 
@@ -30,6 +40,13 @@ trait Friendable
         Friendship::where('user_requested', $this->id)
                   ->where('requester', $user_id)
                   ->update(['status' => true]);
+
+        Notification::create([
+            'from_user' => $this->id,
+            'to_user' => $user_id,
+            'note' => '<b style=\'color:green;\'>' . $this->name . '</b> accepted your friend request',
+            'status' => true
+        ]);
 
         return back()->with('success', 'Request accepted');
     }

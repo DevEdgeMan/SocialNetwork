@@ -47,4 +47,7 @@ Route::middleware(['auth'])->group(function(){
     Route::get('/confirmRequest/{user_id}', function($id) {
         return Auth::user()->confirmRequest($id);
     })->name('confirmRequest');
+    Route::get('/friends', 'ProfileController@friends')->name('friends');
+
+    Route::get('/notifications/{id}', 'ProfileController@notifications')->name('notifications');
 });

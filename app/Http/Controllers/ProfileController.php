@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\User;
+use App\Notification;
 use Auth;
 use DB;
 
@@ -46,6 +47,24 @@ class ProfileController extends Controller
         return view('profile.findFriends', ['allUsers' => $allUsers]);
     }
 
+    public function friends() {
+        $uid = Auth::user()->id;
+
+        $friends1 = User::rightJoin('friendships', 'users.id', 'friendships.requester')
+                        ->select('users.*')
+                        ->where('friendships.user_requested', $uid)
+                        ->where('status', true)
+                        ->get();
+        $friends2 = User::rightJoin('friendships', 'users.id', 'friendships.user_requested')
+                        ->select('users.*')
+                        ->where('friendships.requester', $uid)
+                        ->where('status', true)
+                        ->get();
+        $friends = $friends1->merge($friends2);
+
+        return view('profile.friends', ['friends' => $friends]);
+    }
+
     public function friendRequests() {
         $uid = Auth::user()->id;
 
@@ -82,5 +101,13 @@ class ProfileController extends Controller
         return view('profile.friendRequests', ['requests' => $requests,
                                                'sendrequests' => $sendrequests,
                                                'friends' => $friends]);
+    }
+
+    public function notifications($noti_id) {
+        $notis = Notification::where('id', $noti_id)->get();
+
+        Notification::where('id', $noti_id)->update(['status' => false]);
+
+        return view('profile.notifications', ['notis' => $notis]);
     }
 }

@@ -10,6 +10,8 @@
 
     <title>{{ config('app.name', 'Laravel') }}</title>
 
+    <script src="https://use.fontawesome.com/595a5020bd.js"></script>
+
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
@@ -38,7 +40,6 @@
                     <ul class="nav navbar-nav">
                         @auth
                             <li><a href="{{ route('home') }}">Home</a></li>
-                            <li><a href="{{ route('profile', Auth::user()->slug) }}">Profile</a></li>
                             <li><a href="{{ route('findFriends') }}">Find Friends</a></li>
                             <li><a href="{{ route('friendRequests') }}">My Requests</a></li>
                         @endauth
@@ -51,13 +52,47 @@
                             <li><a href="{{ route('login') }}">Login</a></li>
                             <li><a href="{{ route('register') }}">Register</a></li>
                         @else
+                            <li>
+                                <a href="{{ route('friends') }}">
+                                    <i class="fa fa-users fa-2x" aria-hidden="true"></i>
+                                </a>
+                            </li>
+
+                            <?php
+                                $notis = App\Notification::where('to_user', Auth::user()->id)
+                                        ->where('status', true)
+                                        ->get();
+
+                                $count = App\Notification::where('to_user', Auth::user()->id)
+                                        ->where('status', true)
+                                        ->count();
+                            ?>
+
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" v-pre>
+                                    <i class="fa fa-globe fa-2x" aria-hidden="true"></i>
+                                    @if ($count > 0)
+                                    <span class="badge" style="background:red; position:relative; top:-15px; left:-15px">
+                                        {{ $count }}
+                                    </span>
+                                    @endif
+                                </a>
+
+                                <ul class="dropdown-menu" style="min-width:350px">
+                                    @foreach ($notis as $noti)
+                                        <li><a href="{{ route('notifications', $noti->id) }}">{!! $noti->note !!}</a></li>
+                                    @endforeach
+                                </ul>
+                            </li>
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" v-pre>
                                     <img src="{{url('/img/' . Auth::user()->pic) }}" width="30px" height="30px" class="img-circle"/>
-                                    {{ Auth::user()->name }} <span class="caret"></span>
                                 </a>
 
                                 <ul class="dropdown-menu">
+                                    <li>
+                                        <a href="{{ route('profile', Auth::user()->slug) }}">My Account</a>
+                                    </li>
                                     <li>
                                         <a href="{{ route('editProfile') }}">Edit Profile</a>
                                     </li>
