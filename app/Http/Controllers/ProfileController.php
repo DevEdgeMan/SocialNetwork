@@ -11,7 +11,8 @@ use DB;
 class ProfileController extends Controller
 {
     public function index($slug) {
-        return view('profile.index');
+        $users = User::where('slug', $slug)->get();
+        return view('profile.index', ['users' => $users]);
     }
 
     public function uploadImage(Request $request) {
