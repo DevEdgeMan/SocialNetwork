@@ -33,4 +33,20 @@ class User extends Authenticatable
     public function profile() {
         return $this->hasOne('App\Profile');
     }
+
+    public function sentnoti() {
+        return $this->hasMany('App\Notification', 'from_user');
+    }
+
+    public function receivednoti() {
+        return $this->hasMany('App\Notification', 'to_user');
+    }
+
+    public function sentreq() {
+        return $this->hasMany('App\Friendship', 'requester');
+    }
+
+    public function receivedreq() {
+        return $this->hasMany('App\Friendship', 'user_requested');
+    }
 }
