@@ -3,10 +3,14 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+//use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Collection;
 use App\User;
 use App\Notification;
+use App\Friendship;
 use Auth;
 use DB;
+use App\Repositories\ProfileRepository;
 
 class ProfileController extends Controller
 {
@@ -49,9 +53,10 @@ class ProfileController extends Controller
     }
 
     public function friends() {
+        $user = Auth::user();
         $uid = Auth::user()->id;
 
-        $friends1 = User::rightJoin('friendships', 'users.id', 'friendships.requester')
+        /*$friends1 = User::rightJoin('friendships', 'users.id', 'friendships.requester')
                         ->select('users.*')
                         ->where('friendships.user_requested', $uid)
                         ->where('status', true)
@@ -60,10 +65,19 @@ class ProfileController extends Controller
                         ->select('users.*')
                         ->where('friendships.requester', $uid)
                         ->where('status', true)
-                        ->get();
+                        ->get();*/
+
+        $friends1 = $user->sentreq->where('status', true);
+        $friends2 = $user->receivedreq->where('status', true);
         $friends = $friends1->merge($friends2);
 
-        return view('profile.friends', ['friends' => $friends]);
+        //$tasks = new ProfileRepository;
+        $allFriends = ProfileRepository::instance()->getFriends($friends1, $friends2);
+
+        return view('profile.friends', ['allFriends' => $allFriends, 
+                                        'friends' => $friends, 
+                                        'friends1' => $friends1, 'friends2' => $friends2]);
+        //return view('profile.friends', ['friends' => $friends]);
     }
 
     public function friendRequests() {
