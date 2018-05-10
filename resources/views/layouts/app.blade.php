@@ -86,7 +86,7 @@
                             </li>
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" v-pre>
-                                    <img src="{{url('/img/' . Auth::user()->pic) }}" width="30px" height="30px" class="img-circle"/>
+                                    <img src="{{url('../img/' . Auth::user()->pic) }}" width="30px" height="30px" class="img-circle"/>
                                 </a>
 
                                 <ul class="dropdown-menu">

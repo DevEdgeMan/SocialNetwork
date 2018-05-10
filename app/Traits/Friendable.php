@@ -36,6 +36,22 @@ trait Friendable
         return 'failed';
     }
 
+    public function removeFriend($user_id) {
+        Friendship::where('user_requested', $this->id)
+                  ->where('requester', $user_id)
+                  ->where('status', true)
+                  ->delete();
+
+        Notification::create([
+            'from_user' => $this->id,
+            'to_user' => $user_id,
+            'note' => '<b style=\'color:green;\'>' . $this->name . '</b> deleted you from friend list',
+            'status' => true
+        ]);
+
+        return back();
+    }
+
     public function confirmRequest($user_id) {
         Friendship::where('user_requested', $this->id)
                   ->where('requester', $user_id)
@@ -49,6 +65,22 @@ trait Friendable
         ]);
 
         return back()->with('success', 'Request accepted');
+    }
+
+    public function removeRequests($user_id) {
+        Friendship::where('user_requested', $this->id)
+                  ->where('requester', $user_id)
+                  ->where('status', false)
+                  ->delete();
+
+        Notification::create([
+            'from_user' => $this->id,
+            'to_user' => $user_id,
+            'note' => '<b style=\'color:green;\'>' . $this->name . '</b> has cancelled your friend request',
+            'status' => true
+        ]);
+
+        return back();
     }
 
     /*public function checkFriendship($user_id) {

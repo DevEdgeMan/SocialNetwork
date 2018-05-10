@@ -43,7 +43,7 @@
 
                         <div class="row" style="border-bottom:1px solid #ccc; margin-bottom:15px">
                             <div class="col-md-2 pull-left">
-                                <img src="{{url('/img/' . $user->pic) }}" width="80px" height="80px" class="img-rounded"/>
+                                <img src="{{url('../img/' . $user->pic) }}" width="80px" height="80px" class="img-rounded"/>
                             </div>
 
                             <div class="col-md-7 pull-left">

@@ -20,7 +20,7 @@
                     <div class="row">
                         <div class="col-sm-6 col-md-4">
                             <div class="thumbnail">
-                                <img src="{{url('/img/' . $user->pic) }}" class="img-circle"/>
+                                <img src="{{url('../img/' . $user->pic) }}" class="img-circle"/>
                                 <div class="caption">
                                     <h3 align="center">{{ ucwords($user->name) }}</h3>
                                     <p align="center">{{ $user->profile->city }} - {{ $user->profile->country }}</p>

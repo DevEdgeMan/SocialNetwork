@@ -43,10 +43,16 @@ Route::middleware(['auth'])->group(function(){
     Route::get('/addFriend/{user_id}', function($id) {
         return Auth::user()->addFriend($id);
     })->name('addFriend');
+    Route::get('/removeFriend/{user_id}', function($id) {
+        return Auth::user()->removeFriend($id);
+    })->name('removeFriend');
     Route::get('/friendRequests', 'ProfileController@friendRequests')->name('friendRequests');
     Route::get('/confirmRequest/{user_id}', function($id) {
         return Auth::user()->confirmRequest($id);
     })->name('confirmRequest');
+    Route::get('/removeRequests/{user_id}', function($id) {
+        return Auth::user()->removeRequests($id);
+    })->name('removeRequests');
     Route::get('/friends', 'ProfileController@friends')->name('friends');
 
     Route::get('/notifications/{id}', 'ProfileController@notifications')->name('notifications');

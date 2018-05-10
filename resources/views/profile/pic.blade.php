@@ -20,12 +20,12 @@
                     
                     Change your image
                     <br/><br/>
-                    <img src="{{url('/img/' . Auth::user()->pic) }}" width="100px" height="100px"/>
-                    <br/>
+                    <img src="{{url('../img/' . Auth::user()->pic) }}" width="100px" height="100px"/>
+                    <br><br>
                     
                     <form action="{{ route('uploadImage') }}" method="post" enctype="multipart/form-data">
                         {{csrf_field()}}
-                        <input type="file" class="form-control" name="pic"/>
+                        <input type="file" class="form-control" name="pic"/><br>
                         <input type="submit" class="btn btn-success" name="btn"/>
                     </form>
                 </div>

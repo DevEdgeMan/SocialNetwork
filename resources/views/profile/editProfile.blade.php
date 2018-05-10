@@ -18,7 +18,7 @@
                 <div class="panel-body">
                     <div class="col-sm-6 col-md-4">
                         <div class="thumbnail">
-                            <img src="{{url('/img/' . Auth::user()->pic) }}" class="img-circle"/>
+                            <img src="{{url('../img/' . Auth::user()->pic) }}" class="img-circle"/>
                             <div class="caption">
                                 <h3 align="center">{{ ucwords(Auth::user()->name) }}</h3>
                                 <p align="center">{{ Auth::user()->profile->city }} - {{ Auth::user()->profile->country }}</p>
