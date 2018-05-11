@@ -56,4 +56,7 @@ Route::middleware(['auth'])->group(function(){
     Route::get('/friends', 'ProfileController@friends')->name('friends');
 
     Route::get('/notifications/{id}', 'ProfileController@notifications')->name('notifications');
+
+    Route::post('/addPost', 'PostController@addPost')->name('addPost');
+    Route::get('/posts', 'PostController@posts')->name('posts');
 });
