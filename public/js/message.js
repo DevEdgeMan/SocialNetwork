@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 40);
+/******/ 	return __webpack_require__(__webpack_require__.s = 43);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -43261,50 +43261,38 @@ if (false) {
 }
 
 /***/ }),
-/* 40 */
+/* 40 */,
+/* 41 */,
+/* 42 */,
+/* 43 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(41);
-module.exports = __webpack_require__(42);
+module.exports = __webpack_require__(44);
 
 
 /***/ }),
-/* 41 */
+/* 44 */
 /***/ (function(module, exports, __webpack_require__) {
-
-
-/**
- * First we will load all of this project's JavaScript dependencies which
- * includes Vue and other libraries. It is a great starting point when
- * building robust, powerful web applications using Vue and Laravel.
- */
 
 __webpack_require__(9);
 
 window.Vue = __webpack_require__(33);
 
-/**
- * Next, we will create a fresh Vue application instance and attach it to
- * the page. Then, you may begin adding components to this application
- * or customize the JavaScript scaffolding to fit your unique needs.
- */
-
 Vue.component('example-component', __webpack_require__(36));
 
-var app = new Vue({
-    el: '#app',
+var msg_app = new Vue({
+    el: '#msg_app',
     data: {
-        editpost: 'Edit New Post',
-        content: "",
-        posts: []
+        friends: 'Your Friends',
+        allFriends: []
     },
 
     created: function created() {
         var _this = this;
 
-        axios.get('/posts').then(function (response) {
+        axios.get('/getMessages').then(function (response) {
             console.log(response);
-            _this.posts = response.data;
+            _this.allFriends = response.data;
         }).catch(function (error) {
             console.log(error);
         });
@@ -43312,27 +43300,11 @@ var app = new Vue({
 
 
     methods: {
-        addPost: function addPost() {
-            var _this2 = this;
-
-            axios.post('/addPost', {
-                content: this.content
-            }).then(function (response) {
-                console.log(response);
-                _this2.content = "";
-                _this2.posts = response.data;
-            }).catch(function (error) {
-                console.log(error);
-            });
+        messages: function messages($id) {
+            alert('showing messages from user ' + $id + '!');
         }
     }
 });
-
-/***/ }),
-/* 42 */
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
 
 /***/ })
 /******/ ]);

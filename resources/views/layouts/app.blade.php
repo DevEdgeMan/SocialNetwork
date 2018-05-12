@@ -14,10 +14,24 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <style>
+        .notifi {
+            font-size:90%;
+        }
+        .new-post {
+            padding-top:5px; 
+            padding-bottom:5px; 
+            background:#f5f5f5;
+        }
+        .old-post {
+            padding-top:5px; 
+            padding-bottom:5px;
+        }
+    </style>
     @yield('style')
 </head>
 <body>
-    <div id="app">
+    <div id="mainapp">
         <nav class="navbar navbar-default navbar-static-top">
             <div class="container">
                 <div class="navbar-header">
@@ -61,7 +75,9 @@
 
                             <?php
                                 $notis = App\Notification::where('to_user', Auth::user()->id)
-                                        ->where('status', true)
+                                        //->where('status', true)
+                                        ->orderBy('status', 'desc')
+                                        ->orderBy('created_at', 'desc')
                                         ->get();
 
                                 $count = App\Notification::where('to_user', Auth::user()->id)
@@ -80,10 +96,27 @@
                                 </a>
 
                                 <ul class="dropdown-menu" style="min-width:350px">
+                                <div class="col-md-12">
                                     @foreach ($notis as $noti)
-                                        <li><a href="{{ route('notifications', $noti->id) }}">{!! $noti->note !!}</a></li>
+                                    @if ($noti->status == 1)
+                                    <div class="row new-post">
+                                    @else
+                                    <div class="row old-post">
+                                    @endif
+                                        <li><a href="{{ route('notifications', $noti->id) }}">
+                                        <div class="col-md-2 pull-left">
+                                            <img src="{{url('../')}}/img/{{$noti->usersent->pic}}" 
+                                            width="40px" height="40px" class="img-rounded"/>
+                                        </div>
+                                        <div class="col-md-10 pull-right notifi">
+                                            {!! $noti->note !!}<br>
+                                            <small><i class="fa fa-users"></i> {{ $noti->created_at }}</small>
+                                        </div>
+                                        </a></li>
+                                    </div>
                                     @endforeach
-                                </ul>
+                                </div>
+                                </ul> 
                             </li>
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" v-pre>
@@ -121,5 +154,6 @@
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}"></script>
+    <script src="{{ asset('js/message.js') }}"></script>
 </body>
 </html>

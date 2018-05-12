@@ -1,15 +1,17 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container col-md-10 col-md-offset-1">
+<div class="container">
     <ol class="breadcrumb">
         <li><a href="#">Home</a></li>
     </ol>
-    
+</div>
+
+<div class="container col-md-10 col-md-offset-1" id="app"> 
     <div class="row">
         <div class="col-md-2">
             <div class="panel panel-default">
-                <div class="panel-body sidebar" id="app">
+                <div class="panel-body sidebar">
                     <h4 align="center">Left Sidebar</h4>
                     <hr>
                 </div>
@@ -92,7 +94,7 @@
     margin-bottom:20px;
 }
 .panel .sidebar {
-    min-height:500px;
+    min-height:600px;
 }
 </style>
 @endsection
