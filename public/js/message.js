@@ -43033,15 +43033,17 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1), __webpack_require__(4)))
 
 /***/ }),
-/* 36 */
+/* 36 */,
+/* 37 */,
+/* 38 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
-var normalizeComponent = __webpack_require__(37)
+var normalizeComponent = __webpack_require__(39)
 /* script */
-var __vue_script__ = __webpack_require__(38)
+var __vue_script__ = __webpack_require__(40)
 /* template */
-var __vue_template__ = __webpack_require__(39)
+var __vue_template__ = __webpack_require__(41)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -43080,7 +43082,7 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 37 */
+/* 39 */
 /***/ (function(module, exports) {
 
 /* globals __VUE_SSR_CONTEXT__ */
@@ -43189,7 +43191,7 @@ module.exports = function normalizeComponent (
 
 
 /***/ }),
-/* 38 */
+/* 40 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -43218,7 +43220,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 39 */
+/* 41 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -43261,8 +43263,6 @@ if (false) {
 }
 
 /***/ }),
-/* 40 */,
-/* 41 */,
 /* 42 */,
 /* 43 */
 /***/ (function(module, exports, __webpack_require__) {
@@ -43278,13 +43278,14 @@ __webpack_require__(9);
 
 window.Vue = __webpack_require__(33);
 
-Vue.component('example-component', __webpack_require__(36));
+Vue.component('example-component', __webpack_require__(38));
 
-var msg_app = new Vue({
-    el: '#msg_app',
+var app = new Vue({
+    el: '#app',
     data: {
         friends: 'Your Friends',
-        allFriends: []
+        allFriends: [],
+        allMessages: []
     },
 
     created: function created() {
@@ -43300,8 +43301,15 @@ var msg_app = new Vue({
 
 
     methods: {
-        messages: function messages($id) {
-            alert('showing messages from user ' + $id + '!');
+        messages: function messages(id) {
+            var _this2 = this;
+
+            //alert('showing messages from user ' + $id + '!');
+            axios.get('/getMessage/' + id).then(function (response) {
+                console.log(response);
+                _this2.allMessages = response.data;
+                console.log(_this2.allMessages);
+            });
         }
     }
 });

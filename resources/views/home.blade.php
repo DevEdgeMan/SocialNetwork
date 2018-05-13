@@ -7,7 +7,7 @@
     </ol>
 </div>
 
-<div class="container col-md-10 col-md-offset-1" id="app"> 
+<div class="container col-md-10 col-md-offset-1"> 
     <div class="row">
         <div class="col-md-2">
             <div class="panel panel-default">

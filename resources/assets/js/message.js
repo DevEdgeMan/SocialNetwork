@@ -4,11 +4,12 @@ window.Vue = require('vue');
 
 Vue.component('example-component', require('./components/ExampleComponent.vue'));
 
-const msg_app = new Vue({
-    el: '#msg_app',
+const app = new Vue({
+    el: '#app',
     data: {
         friends: 'Your Friends',
         allFriends: [],
+        allMessages: [],
     },
 
     created() {
@@ -23,8 +24,14 @@ const msg_app = new Vue({
     },
 
     methods: {
-        messages: function($id) {
-            alert('showing messages from user ' + $id + '!');
+        messages: function(id) {
+            //alert('showing messages from user ' + $id + '!');
+            axios.get('/getMessage/'+id)
+                 .then(response => {
+                     console.log(response);
+                     this.allMessages = response.data;
+                     console.log(this.allMessages);
+                 })
         }
     }
 });

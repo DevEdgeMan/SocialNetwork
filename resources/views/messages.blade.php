@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.msg')
 
 @section('content')
 <div class="container">
@@ -8,7 +8,7 @@
     </ol>
 </div>
     
-<div class="container col-md-12" id="msg_app">
+<div class="container col-md-12" id="app">
     <div class="row">
         <div class="col-md-3">
             <div class="panel panel-default">
@@ -34,8 +34,17 @@
             <div class="panel panel-default">
                 <div class="panel-heading">Messages</div>
 
-                <div class="panel-body">
+                <div v-if="allMessages.length == 0" class="panel-body">
                     <p>Messages go here</p>
+                </div>
+
+                <div v-if="allMessages=='No messages!'" class="panel-body">
+                    <p>No Messages!!!</p>
+                </div>
+                
+                <div v-for="message in allMessages" class="panel-body">
+                    <p v-if="message.user_from == {{Auth::user()->id}}" style="background-color:lightgrey;">@{{message.user_from}} said: @{{message.content}}</p>
+                    <p v-if="message.user_from != {{Auth::user()->id}}" style="background-color:lightblue;">@{{message.user_from}} said: @{{message.content}}</p>
                 </div>
             </div>
         </div>

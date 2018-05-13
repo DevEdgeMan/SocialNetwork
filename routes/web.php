@@ -61,19 +61,8 @@ Route::middleware(['auth'])->group(function(){
     Route::get('/posts', 'PostController@posts')->name('posts');
 
     Route::get('/messages', function() {
-        /*$user = Auth::user();
-        $friends1 = $user->sentreq->where('status', true);
-        $friends2 = $user->receivedreq->where('status', true);
-        $allFriends = App\Repositories\ProfileRepository::instance()->getFriends($friends1, $friends2);*/
         return view('messages');
     })->name('messages');
-
-    Route::get('/getMessages', function() {
-        $user = Auth::user();
-        $friends1 = $user->sentreq->where('status', true);
-        $friends2 = $user->receivedreq->where('status', true);
-        $allFriends = App\Repositories\ProfileRepository::instance()->getFriends($friends1, $friends2);
-        //return view('messages', ['allFriends' => $allFriends]);
-        return $allFriends;
-    })->name('getMessages');
+    Route::get('/getMessages', 'MessageController@getMessages')->name('getMessages');
+    Route::get('/getMessage/{id}', 'MessageController@getMessage')->name('getMessage');
 });
