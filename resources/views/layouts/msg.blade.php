@@ -154,6 +154,6 @@
     </div>
 
     <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}"></script>
+    <script src="{{ asset('js/message.js') }}"></script>
 </body>
 </html>

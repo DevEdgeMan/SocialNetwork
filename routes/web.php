@@ -56,4 +56,13 @@ Route::middleware(['auth'])->group(function(){
     Route::get('/friends', 'ProfileController@friends')->name('friends');
 
     Route::get('/notifications/{id}', 'ProfileController@notifications')->name('notifications');
+
+    Route::post('/addPost', 'PostController@addPost')->name('addPost');
+    Route::get('/posts', 'PostController@posts')->name('posts');
+
+    Route::get('/messages', function() {
+        return view('messages');
+    })->name('messages');
+    Route::get('/getMessages', 'MessageController@getMessages')->name('getMessages');
+    Route::get('/getMessage/{id}', 'MessageController@getMessage')->name('getMessage');
 });

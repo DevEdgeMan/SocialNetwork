@@ -44,6 +44,7 @@
                                     <div class="col-md-3 pull-right">
                                         <p class="pull-right">
                                             <a href="{{ route('confirmRequest', $user->id) }}" class="btn btn-info btn-sm">Confirm</a>
+                                            <a href="{{ route('removeRequests', $user->id) }}" class="btn btn-default btn-sm">Remove</a>
                                         </p>
                                     </div>
                                 </div>
@@ -91,7 +92,7 @@
 
                                     <div class="col-md-3 pull-right">
                                         <p class="pull-right">
-                                            <a href="#" class="btn btn-info btn-sm">Unfriend</a>
+                                            <a href="{{ route('removeFriend', $user->id) }}" class="btn btn-info btn-sm">Unfriend</a>
                                         </p>
                                     </div>
                                 </div>

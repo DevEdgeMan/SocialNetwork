@@ -18,5 +18,37 @@ window.Vue = require('vue');
 Vue.component('example-component', require('./components/ExampleComponent.vue'));
 
 const app = new Vue({
-    el: '#app'
+    el: '#app',
+    data: {
+        editpost: 'Edit New Post',
+        content: "",
+        posts: []
+    },
+
+    created() {
+        axios.get('/posts')
+            .then(response => {
+                console.log(response);
+                this.posts = response.data;
+            })
+            .catch(function(error) {
+                console.log(error);
+            });
+    },
+
+    methods: {
+        addPost() {
+            axios.post('/addPost', {
+                    content: this.content
+                })
+                .then(response => {
+                    console.log(response);
+                    this.content = "";
+                    this.posts = response.data;
+                })
+                .catch(function(error) {
+                    console.log(error);
+                });
+        }
+    }
 });

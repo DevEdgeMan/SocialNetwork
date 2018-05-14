@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 36);
+/******/ 	return __webpack_require__(__webpack_require__.s = 43);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -43033,74 +43033,8 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1), __webpack_require__(4)))
 
 /***/ }),
-/* 36 */
-/***/ (function(module, exports, __webpack_require__) {
-
-__webpack_require__(37);
-module.exports = __webpack_require__(42);
-
-
-/***/ }),
-/* 37 */
-/***/ (function(module, exports, __webpack_require__) {
-
-
-/**
- * First we will load all of this project's JavaScript dependencies which
- * includes Vue and other libraries. It is a great starting point when
- * building robust, powerful web applications using Vue and Laravel.
- */
-
-__webpack_require__(9);
-
-window.Vue = __webpack_require__(33);
-
-/**
- * Next, we will create a fresh Vue application instance and attach it to
- * the page. Then, you may begin adding components to this application
- * or customize the JavaScript scaffolding to fit your unique needs.
- */
-
-Vue.component('example-component', __webpack_require__(38));
-
-var app = new Vue({
-    el: '#app',
-    data: {
-        editpost: 'Edit New Post',
-        content: "",
-        posts: []
-    },
-
-    created: function created() {
-        var _this = this;
-
-        axios.get('/posts').then(function (response) {
-            console.log(response);
-            _this.posts = response.data;
-        }).catch(function (error) {
-            console.log(error);
-        });
-    },
-
-
-    methods: {
-        addPost: function addPost() {
-            var _this2 = this;
-
-            axios.post('/addPost', {
-                content: this.content
-            }).then(function (response) {
-                console.log(response);
-                _this2.content = "";
-                _this2.posts = response.data;
-            }).catch(function (error) {
-                console.log(error);
-            });
-        }
-    }
-});
-
-/***/ }),
+/* 36 */,
+/* 37 */,
 /* 38 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -43329,10 +43263,56 @@ if (false) {
 }
 
 /***/ }),
-/* 42 */
-/***/ (function(module, exports) {
+/* 42 */,
+/* 43 */
+/***/ (function(module, exports, __webpack_require__) {
 
-// removed by extract-text-webpack-plugin
+module.exports = __webpack_require__(44);
+
+
+/***/ }),
+/* 44 */
+/***/ (function(module, exports, __webpack_require__) {
+
+__webpack_require__(9);
+
+window.Vue = __webpack_require__(33);
+
+Vue.component('example-component', __webpack_require__(38));
+
+var app = new Vue({
+    el: '#app',
+    data: {
+        friends: 'Your Friends',
+        allFriends: [],
+        allMessages: []
+    },
+
+    created: function created() {
+        var _this = this;
+
+        axios.get('/getMessages').then(function (response) {
+            console.log(response);
+            _this.allFriends = response.data;
+        }).catch(function (error) {
+            console.log(error);
+        });
+    },
+
+
+    methods: {
+        messages: function messages(id) {
+            var _this2 = this;
+
+            //alert('showing messages from user ' + $id + '!');
+            axios.get('/getMessage/' + id).then(function (response) {
+                console.log(response);
+                _this2.allMessages = response.data;
+                console.log(_this2.allMessages);
+            });
+        }
+    }
+});
 
 /***/ })
 /******/ ]);
