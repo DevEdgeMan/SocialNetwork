@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Repositories\ProfileRepository;
 use Auth;
 use DB;
+use App\Conversation;
+use App\Message;
 
 class MessageController extends Controller
 {
@@ -39,6 +41,53 @@ class MessageController extends Controller
             return $messages;
         } else {
             return 'No messages!';
+        }
+    }
+
+    public function sendMessage(Request $request) {
+        $convId = $request->convId;
+        $userTo = $request->userTo;
+        $content = $request->content;
+
+        if ($convId == 0) {
+            $createConv = Conversation::create([
+                'user_one' => Auth::user()->id,
+                'user_two' => $userTo,
+                'title' => 'test_chat',
+                'status' => true
+            ]);
+
+            if ($createConv) {
+                $createMsg = Message::create([
+                    'conversation_id' => $createConv->id,
+                    'user_from' => Auth::user()->id,
+                    'user_to' => $userTo,
+                    'content' => $content,
+                    'status' => true
+                ]);
+
+                if ($createMsg) {
+                    /*$messages = Messages::where('conversation_id', $createConv->id)
+                                        ->get();
+                    return $messages;*/
+                    return $this->getMessage($createConv->id);
+                }
+            }
+        } else {
+            $createMsg = Message::create([
+                'conversation_id' => $convId,
+                'user_from' => Auth::user()->id,
+                'user_to' => $userTo,
+                'content' => $content,
+                'status' => true
+            ]);
+
+            if ($createMsg) {
+                /*$messages = Messages::where('conversation_id', $convId)
+                                    ->get();
+                return $messages;*/
+                return $this->getMessage($userTo);
+            }
         }
     }
 }

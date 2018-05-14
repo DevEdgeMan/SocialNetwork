@@ -65,4 +65,5 @@ Route::middleware(['auth'])->group(function(){
     })->name('messages');
     Route::get('/getMessages', 'MessageController@getMessages')->name('getMessages');
     Route::get('/getMessage/{id}', 'MessageController@getMessage')->name('getMessage');
+    Route::post('/sendMessage', 'MessageController@sendMessage')->name('sendMessage');
 });

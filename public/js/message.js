@@ -43033,17 +43033,15 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1), __webpack_require__(4)))
 
 /***/ }),
-/* 36 */,
-/* 37 */,
-/* 38 */
+/* 36 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
-var normalizeComponent = __webpack_require__(39)
+var normalizeComponent = __webpack_require__(37)
 /* script */
-var __vue_script__ = __webpack_require__(40)
+var __vue_script__ = __webpack_require__(38)
 /* template */
-var __vue_template__ = __webpack_require__(41)
+var __vue_template__ = __webpack_require__(39)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -43082,7 +43080,7 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 39 */
+/* 37 */
 /***/ (function(module, exports) {
 
 /* globals __VUE_SSR_CONTEXT__ */
@@ -43191,7 +43189,7 @@ module.exports = function normalizeComponent (
 
 
 /***/ }),
-/* 40 */
+/* 38 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -43220,7 +43218,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 41 */
+/* 39 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -43263,6 +43261,8 @@ if (false) {
 }
 
 /***/ }),
+/* 40 */,
+/* 41 */,
 /* 42 */,
 /* 43 */
 /***/ (function(module, exports, __webpack_require__) {
@@ -43278,20 +43278,23 @@ __webpack_require__(9);
 
 window.Vue = __webpack_require__(33);
 
-Vue.component('example-component', __webpack_require__(38));
+Vue.component('example-component', __webpack_require__(36));
 
 var app = new Vue({
     el: '#app',
     data: {
         friends: 'Your Friends',
         allFriends: [],
-        allMessages: []
+        allMessages: [],
+        userTo: 0,
+        content: "",
+        convId: 0
     },
 
     created: function created() {
         var _this = this;
 
-        axios.get('/getMessages').then(function (response) {
+        axios.get('/larabook/public/index.php/getMessages').then(function (response) {
             console.log(response);
             _this.allFriends = response.data;
         }).catch(function (error) {
@@ -43305,10 +43308,30 @@ var app = new Vue({
             var _this2 = this;
 
             //alert('showing messages from user ' + $id + '!');
-            axios.get('/getMessage/' + id).then(function (response) {
+            axios.get('/larabook/public/index.php/getMessage/' + id).then(function (response) {
                 console.log(response);
                 _this2.allMessages = response.data;
-                console.log(_this2.allMessages);
+                _this2.userTo = id;
+                if (_this2.allMessages == 'No messages!') _this2.convId = 0;else _this2.convId = response.data[0].conversation_id;
+                console.log(_this2.userTo);
+                console.log(_this2.convId);
+            });
+        },
+
+        sendMessage: function sendMessage() {
+            var _this3 = this;
+
+            //console.log(this.content);
+            //this.content = "";
+            axios.post('/larabook/public/index.php/sendMessage', {
+                convId: this.convId, userTo: this.userTo, content: this.content
+            }).then(function (response) {
+                _this3.allMessages = response.data;
+                _this3.convId = response.data[0].conversation_id;
+                _this3.content = "";
+                console.log(response);
+            }).catch(function (error) {
+                console.log(error);
             });
         }
     }

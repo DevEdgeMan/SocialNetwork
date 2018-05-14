@@ -26,7 +26,7 @@ const app = new Vue({
     },
 
     created() {
-        axios.get('/posts')
+        axios.get('/larabook/public/index.php/posts')
             .then(response => {
                 console.log(response);
                 this.posts = response.data;
@@ -38,7 +38,7 @@ const app = new Vue({
 
     methods: {
         addPost() {
-            axios.post('/addPost', {
+            axios.post('/larabook/public/index.php/addPost', {
                     content: this.content
                 })
                 .then(response => {

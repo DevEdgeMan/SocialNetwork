@@ -42,9 +42,27 @@
                     <p>No Messages!!!</p>
                 </div>
                 
-                <div v-for="message in allMessages" class="panel-body">
-                    <p v-if="message.user_from == {{Auth::user()->id}}" style="background-color:lightgrey;">@{{message.user_from}} said: @{{message.content}}</p>
-                    <p v-if="message.user_from != {{Auth::user()->id}}" style="background-color:lightblue;">@{{message.user_from}} said: @{{message.content}}</p>
+                <div class="panel-body">
+                    <div v-if="allMessages!='No messages!'" v-for="message in allMessages" class="col-md-8 col-md-offset-2" style="margin-top:15px;">
+                        <p class="col-md-6 pull-right" v-if="message.user_from == {{Auth::user()->id}}" align="right">
+                            <span style="padding:15px; border-radius:15px; background-color:#F0F0F0; color:#333">
+                                @{{message.user_from}} said: @{{message.content}}
+                            </span>
+                        </p>
+                        <p class="col-md-6 pull-left" v-if="message.user_from != {{Auth::user()->id}}" align="left">
+                            <span style="padding:15px; border-radius:15px; background-color:#0084FF; color:#fff">
+                                @{{message.user_from}} said: @{{message.content}}
+                            </span>
+                        </p>
+                    </div>
+                </div>
+
+                <div v-if="userTo != 0" class="panel-body">
+                    <form method="POST" v-on:submit.prevent="sendMessage">
+                        <textarea v-model="content" class="form-control" rows="2" placeholder="Type your message here"></textarea>
+                        <br>
+                        <input type="submit" class="btn btn-info btn-sm pull-right" value="Send">
+                    </form>
                 </div>
             </div>
         </div>
