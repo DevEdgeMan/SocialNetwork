@@ -43,6 +43,11 @@ const app = new Vue({
                  })
         },
 
+        inputContent(e) {
+            if (e.keyCode === 13 && !e.shiftKey)
+                this.sendMessage();
+        },
+
         sendMessage() {
             //console.log(this.content);
             //this.content = "";

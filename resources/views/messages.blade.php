@@ -8,7 +8,7 @@
     </ol>
 </div>
     
-<div class="container col-md-12" id="app">
+<div class="container col-md-10 col-md-offset-1" id="app">
     <div class="row">
         <div class="col-md-3">
             <div class="panel panel-default">
@@ -46,23 +46,22 @@
                     <div v-if="allMessages!='No messages!'" v-for="message in allMessages" class="col-md-8 col-md-offset-2" style="margin-top:15px;">
                         <p class="col-md-6 pull-right" v-if="message.user_from == {{Auth::user()->id}}" align="right">
                             <span style="padding:15px; border-radius:15px; background-color:#F0F0F0; color:#333">
-                                @{{message.user_from}} said: @{{message.content}}
+                                @{{message.content}}
                             </span>
                         </p>
                         <p class="col-md-6 pull-left" v-if="message.user_from != {{Auth::user()->id}}" align="left">
                             <span style="padding:15px; border-radius:15px; background-color:#0084FF; color:#fff">
-                                @{{message.user_from}} said: @{{message.content}}
+                                @{{message.content}}
                             </span>
                         </p>
                     </div>
                 </div>
 
                 <div v-if="userTo != 0" class="panel-body">
-                    <form method="POST" v-on:submit.prevent="sendMessage">
-                        <textarea v-model="content" class="form-control" rows="2" placeholder="Type your message here"></textarea>
-                        <br>
-                        <input type="submit" class="btn btn-info btn-sm pull-right" value="Send">
-                    </form>
+                <div class="col-md-10 col-md-offset-1">
+                    <textarea @keyup="inputContent" v-model="content" class="form-control" rows="2" placeholder="Type your message here"></textarea>
+                    <br>
+                </div>
                 </div>
             </div>
         </div>

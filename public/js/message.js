@@ -43318,6 +43318,9 @@ var app = new Vue({
             });
         },
 
+        inputContent: function inputContent(e) {
+            if (e.keyCode === 13 && !e.shiftKey) this.sendMessage();
+        },
         sendMessage: function sendMessage() {
             var _this3 = this;
 

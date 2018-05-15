@@ -30,10 +30,7 @@ class MessageController extends Controller
                                       ->where('user_one', $id);
                             })
                             ->get();
-        /*$checkConv = DB::table('conversations')
-                            ->where('user_one', Auth::user()->id)
-                            ->where('user_two', $id)
-                            ->get();*/
+        
         if ($checkConv->count() > 0) {
             $messages = DB::table('messages')
                             ->where('conversation_id', $checkConv[0]->id)
@@ -66,12 +63,8 @@ class MessageController extends Controller
                     'status' => true
                 ]);
 
-                if ($createMsg) {
-                    /*$messages = Messages::where('conversation_id', $createConv->id)
-                                        ->get();
-                    return $messages;*/
-                    return $this->getMessage($createConv->id);
-                }
+                if ($createMsg)
+                    return $this->getMessage($userTo);
             }
         } else {
             $createMsg = Message::create([
@@ -82,12 +75,8 @@ class MessageController extends Controller
                 'status' => true
             ]);
 
-            if ($createMsg) {
-                /*$messages = Messages::where('conversation_id', $convId)
-                                    ->get();
-                return $messages;*/
+            if ($createMsg)
                 return $this->getMessage($userTo);
-            }
         }
     }
 }
